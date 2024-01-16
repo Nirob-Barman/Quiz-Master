@@ -19,7 +19,7 @@
                 <tr>
                     <td>{{ score.user.username }}</td>
                     <td>{{ score.quiz.title }}</td>
-                    <td>{{ score.score }}/{{ score.quiz.questions.count }}</td>
+                    <td>{{ score.score }}/{{ score.totalMarks }}</td>
                     <td>{{ score.completed_at|date:"F j, Y, g:i a" }}</td>
                 </tr>
                 {% endfor %}

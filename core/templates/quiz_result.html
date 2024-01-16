@@ -3,6 +3,6 @@
 {% block content %}
 <h1 class="text-center">{{ quiz.title }} - Quiz Result</h1>
 <div class="container">
-    <p>Your score: {{ user_quiz_history.score }} out of {{ user_quiz_history.quiz.questions.count }}</p>
+    <p>Your score: {{ user_quiz_history.score }} out of {{ user_quiz_history.totalMarks }}</p>
 </div>
 {% endblock %}

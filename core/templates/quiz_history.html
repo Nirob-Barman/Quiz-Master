@@ -16,7 +16,7 @@
             {% for history in quiz_history %}
             <tr>
                 <td>{{ history.quiz.title }}</td>
-                <td>{{ history.score }} / {{ history.quiz.questions.count }}</td>
+                <td>{{ history.score }} / {{ history.totalMarks }}</td>
                 <td>{{ history.completed_at }}</td>
             </tr>
             {% endfor %}

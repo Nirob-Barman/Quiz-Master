@@ -22,7 +22,9 @@ def quiz_view(request, category_slug):
     if request.method == 'POST':
         # Handle form submission for each question
         score = 0
+        totalMarks = 0
         for question in questions:
+            totalMarks += question.quizMark
             selected_choice_id = request.POST.get(
                 f'question_{question.id}_choice')
 
@@ -30,16 +32,18 @@ def quiz_view(request, category_slug):
 
             # Check if the selected choice is correct
             if selected_choice.is_correct:
-                score += 1
+                # score += 1
+                score += question.quizMark
 
         # Save user quiz history
         user_quiz_history = UserQuizHistory(
-            user=request.user, quiz=quiz, score=score)
+            user=request.user, quiz=quiz, score=score, totalMarks=totalMarks)
         user_quiz_history.save()
 
         # Send email to the user
         subject = 'Quiz Completion'
-        message = f'Thank you for completing the quiz "{quiz.title}". Your score is {score}/{len(questions)}.'
+        # message = f'Thank you for completing the quiz "{quiz.title}". Your score is {score}/{len(questions)}.'
+        message = f'Thank you for completing the quiz "{quiz.title}". Your score is {score}/{totalMarks}.'
         from_email = EMAIL_HOST_USER
         recipient_list = [request.user.email]
 

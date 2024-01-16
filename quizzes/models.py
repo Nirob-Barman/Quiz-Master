@@ -70,6 +70,7 @@ class UserQuizHistory(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     quiz = models.ForeignKey(Quiz, on_delete=models.CASCADE)
     score = models.IntegerField()
+    totalMarks = models.IntegerField(default=0)
     completed_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
