@@ -44,7 +44,7 @@
                         <div class="card text-center">
                             <div class="card-body">
                                 <h4 class="card-title">{{ quiz.title }}</h4>
-                                <p style="height: 170px;" class="card-text">{{ quiz.description }}</p>
+                                <p style="height: 100px;" class="card-text overflow-y-auto">{{ quiz.description }}</p>
                             </div>
                         </div>
                     </div>
@@ -64,7 +64,7 @@
                         <div class="card text-center">
                             <div class="card-body">
                                 <h4 class="card-title">{{ quiz.title }}</h4>
-                                <p style="height: 170px;" class="card-text">{{ quiz.description }}</p>
+                                <p style="height: clamp(30px, 10vw, 100px)" class="card-text overflow-y-auto">{{ quiz.description }}</p>
                                 <a class="btn btn-primary text-decoration-none rounded"
                                     href="{% url 'quiz_view' quiz.category.name %}">{{ quiz.category.name }}</a>
                             </div>
