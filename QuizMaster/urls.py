@@ -23,7 +23,8 @@ urlpatterns = [
     path('', home, name='home'),
     # path('category/<slug:category_slug>/', home, name='category_wise_quiz'),
 
-    path('quiz/<int:quiz_id>/', quiz_view, name='quiz_view'),
+    # path('quiz/<int:quiz_id>/', quiz_view, name='quiz_view'),
+    path('quiz/<slug:category_slug>/', quiz_view, name='quiz_view'),
     path('quiz/<int:quiz_id>/result/', quiz_result, name='quiz_result'),
     path('quiz_history/<str:username>/', quiz_history, name='quiz_history'),
     path('quiz/<int:quiz_id>/rate/', rate_quiz, name='rate_quiz'),

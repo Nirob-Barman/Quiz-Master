@@ -11,11 +11,13 @@ from quizzes.models import QuizRating
 from django.contrib.auth.decorators import login_required, user_passes_test
 
 
-def quiz_view(request, quiz_id):
-    quiz = get_object_or_404(Quiz, id=quiz_id)
-    # print(quiz)
+def quiz_view(request, category_slug):
+    # Assuming you have a Category model with a 'slug' field
+    category = get_object_or_404(Category, slug=category_slug)
+
+    # Assuming you have a Quiz model with a 'category' field
+    quiz = get_object_or_404(Quiz, category=category)
     questions = Question.objects.filter(quiz=quiz)
-    # print(questions)
 
     if request.method == 'POST':
         # Handle form submission for each question
@@ -23,12 +25,6 @@ def quiz_view(request, quiz_id):
         for question in questions:
             selected_choice_id = request.POST.get(
                 f'question_{question.id}_choice')
-            print(
-                f"Question ID: {question.id}, Selected Choice ID: {selected_choice_id}")
-
-            # Print the IDs of all choices for debugging
-            for choice in question.choice_set.all():
-                print(f"Choice ID: {choice.id}")
 
             selected_choice = get_object_or_404(Choice, id=selected_choice_id)
 
@@ -57,6 +53,53 @@ def quiz_view(request, quiz_id):
         'questions': questions,
     }
     return render(request, 'quiz.html', context)
+
+# def quiz_view(request, quiz_id):
+#     quiz = get_object_or_404(Quiz, id=quiz_id)
+#     print(quiz)
+#     questions = Question.objects.filter(quiz=quiz_id)
+#     print(questions)
+
+#     if request.method == 'POST':
+#         # Handle form submission for each question
+#         score = 0
+#         for question in questions:
+#             selected_choice_id = request.POST.get(
+#                 f'question_{question.id}_choice')
+#             print(
+#                 f"Question ID: {question.id}, Selected Choice ID: {selected_choice_id}")
+
+#             # Print the IDs of all choices for debugging
+#             for choice in question.choice_set.all():
+#                 print(f"Choice ID: {choice.id}")
+
+#             selected_choice = get_object_or_404(Choice, id=selected_choice_id)
+
+#             # Check if the selected choice is correct
+#             if selected_choice.is_correct:
+#                 score += 1
+
+#         # Save user quiz history
+#         user_quiz_history = UserQuizHistory(
+#             user=request.user, quiz=quiz, score=score)
+#         user_quiz_history.save()
+
+#         # Send email to the user
+#         subject = 'Quiz Completion'
+#         message = f'Thank you for completing the quiz "{quiz.title}". Your score is {score}/{len(questions)}.'
+#         from_email = EMAIL_HOST_USER
+#         recipient_list = [request.user.email]
+
+#         send_mail(subject, message, from_email,
+#                   recipient_list, fail_silently=False)
+
+#         return redirect('quiz_result', quiz_id=quiz.id)
+
+#     context = {
+#         'quiz': quiz,
+#         'questions': questions,
+#     }
+#     return render(request, 'quiz.html', context)
 
 
 def quiz_result(request, quiz_id):

@@ -23,15 +23,15 @@ class Quiz(models.Model):
     def __str__(self):
         return self.title
     
-    def clean(self):
-        # Ensure the quiz has at least 5 and at most 50 questions
-        min_questions = 5
-        max_questions = 50
+    # def clean(self):
+    #     # Ensure the quiz has at least 5 and at most 50 questions
+    #     min_questions = 5
+    #     max_questions = 50
         
-        if self.questions.count() < min_questions:
-            raise ValidationError(f'A quiz must have at least {min_questions} questions.')
-        if self.questions.count() > max_questions:
-            raise ValidationError(f'A quiz cannot have more than {max_questions} questions.')
+    #     if self.questions.count() < min_questions:
+    #         raise ValidationError(f'A quiz must have at least {min_questions} questions.')
+    #     if self.questions.count() > max_questions:
+    #         raise ValidationError(f'A quiz cannot have more than {max_questions} questions.')
 
 
 
