@@ -103,7 +103,7 @@ def user_login(request):
                 if user is not None:
                     login(request, user)
 
-                    messages.success(request, 'Logged In Successfully')
+                    # messages.success(request, 'Logged In Successfully')
                     messages.info(
                         request, f"You are now logged in as {username}")
 
@@ -288,7 +288,7 @@ class UserLoginView(SuccessMessageMixin, LoginView):
 
 def user_logout(request):
     logout(request)
-    messages.info(request, "Logged Out Successfully")
+    # messages.info(request, "Logged Out Successfully")
     return redirect('home')
 
 
