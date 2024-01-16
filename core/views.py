@@ -11,6 +11,7 @@ from quizzes.models import QuizRating
 from django.contrib.auth.decorators import login_required, user_passes_test
 
 
+@login_required
 def quiz_view(request, category_slug):
     # Assuming you have a Category model with a 'slug' field
     category = get_object_or_404(Category, slug=category_slug)
@@ -108,6 +109,7 @@ def quiz_view(request, category_slug):
 #     return render(request, 'quiz.html', context)
 
 
+@login_required
 def quiz_result(request, quiz_id):
     quiz = get_object_or_404(Quiz, id=quiz_id)
     user_quiz_history = UserQuizHistory.objects.filter(
@@ -160,6 +162,8 @@ def delete_rating(request, rating_id):
     rating.delete()
     return redirect('rating_history')
 
+
+@login_required
 def quiz_history(request, username):
     user = get_object_or_404(User, username=username)
     quiz_history = UserQuizHistory.objects.filter(
@@ -173,6 +177,7 @@ def quiz_history(request, username):
     return render(request, 'quiz_history.html', context)
 
 
+@login_required
 def leaderboard(request):
     # Get top scores from UserQuizHistory
     top_scores = UserQuizHistory.objects.order_by('-score')[:10]
@@ -183,7 +188,23 @@ def leaderboard(request):
 
     return render(request, 'leaderboard.html', context)
 
+# @login_required
+# def leaderboard(request):
+#     next_url = request.GET.get('next', None)
 
+#     if next_url:
+#         return redirect(next_url)
+#     else:
+#         # Get top scores from UserQuizHistory
+#         top_scores = UserQuizHistory.objects.order_by('-score')[:10]
+
+#         context = {
+#             'top_scores': top_scores,
+#         }
+
+#         return render(request, 'leaderboard.html', context)
+
+@user_passes_test(lambda u: u.is_staff)
 def remove_user(request, user_id):
     user = get_object_or_404(User, id=user_id)
 

@@ -30,7 +30,6 @@ from QuizMaster import settings
 from django.core.mail import EmailMessage, send_mail, EmailMultiAlternatives
 from django.contrib.sites.shortcuts import get_current_site
 
-
 from django.contrib.auth.tokens import default_token_generator
 # from django.utils.encoding import force_text
 
@@ -140,6 +139,8 @@ def list_profiles(request):
     users = User.objects.all()
     return render(request, 'list_profiles.html', {'users': users})
 
+
+@login_required
 def privacy_settings(request):
     if request.user.is_authenticated:
         return render(request, 'profile_settings.html', {'title': 'Privacy Settings', 'user': request.user})
@@ -328,6 +329,7 @@ def password_change(request):
         # return redirect('profile')
 
 
+@login_required
 def password_change_without_old_password(request):
     if request.user.is_authenticated:
         form = SetPasswordForm(request.user)
@@ -349,6 +351,7 @@ def password_change_without_old_password(request):
         # return redirect('profile')
 
 
+@login_required
 def edit_privacy_settings(request):
     if request.user.is_authenticated:
         form = forms.EditProfileForm(instance=request.user)
