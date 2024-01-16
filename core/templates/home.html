@@ -66,7 +66,7 @@
                                 <h4 class="card-title">{{ quiz.title }}</h4>
                                 <p style="height: clamp(30px, 10vw, 100px)" class="card-text overflow-y-auto">{{ quiz.description }}</p>
                                 <a class="btn btn-primary text-decoration-none rounded"
-                                    href="{% url 'quiz_view' quiz.category.name %}">{{ quiz.category.name }}</a>
+                                    href="{% url 'quiz_view' quiz.category.name %}">View {{ quiz.category.name|title }} Quizzes</a>
                             </div>
                         </div>
                     </div>

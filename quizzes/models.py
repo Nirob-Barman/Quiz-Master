@@ -21,7 +21,7 @@ class Quiz(models.Model):
     has_time_limit = models.BooleanField(default=False)
 
     def __str__(self):
-        return self.title
+        return f'{self.title} - {self.questions.count()} questions'
     
     # def clean(self):
     #     # Ensure the quiz has at least 5 and at most 50 questions
@@ -63,7 +63,7 @@ class Choice(models.Model):
 
     def __str__(self):
         # return self.quizAnswer
-        return f'{self.question.quizQuestion} - {self.quizAnswer}'
+        return f'{self.question.quizQuestion} --||-- {self.quizAnswer}'
 
 
 class UserQuizHistory(models.Model):
