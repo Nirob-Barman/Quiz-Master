@@ -22,11 +22,22 @@ class Quiz(models.Model):
         return self.title
 
 
+RATING_RANGE = [
+    (1, '1'),
+    (2, '2'),
+    (3, '3'),
+    (4, '4'),
+    (5, '5'),
+    (6, '6'),
+    (7, '7'),
+]
+
 class QuizRating(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     quiz = models.ForeignKey(Quiz, on_delete=models.CASCADE)
-    rating = models.PositiveIntegerField(
-        validators=[MinValueValidator(1), MaxValueValidator(7)])
+    # rating = models.PositiveIntegerField(
+    #     validators=[MinValueValidator(1), MaxValueValidator(7)])
+    rating = models.PositiveIntegerField(choices=RATING_RANGE)
 
     def __str__(self):
         return f'{self.user.username} - {self.quiz.title} - {self.rating}'

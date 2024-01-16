@@ -134,6 +134,15 @@ def leaderboard(request):
 
     return render(request, 'leaderboard.html', context)
 
+
+def remove_user(request, user_id):
+    user = get_object_or_404(User, id=user_id)
+
+    # Perform any additional logic before deleting the user
+
+    user.delete()
+    return redirect('list_profiles')
+
 # def home(request, category_slug=None):
 #     categories = Category.objects.all()
 #     selected_category = None

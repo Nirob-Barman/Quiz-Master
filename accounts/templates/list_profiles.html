@@ -9,6 +9,7 @@
                 <th scope="col">Username</th>
                 <th scope="col">Full Name</th>
                 <th scope="col">User Type</th>
+                <th scope="col">Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -21,6 +22,14 @@
                     <span class="text-danger">Admin</span>
                     {% else %}
                     <span class="text-primary">Regular User</span>
+                    {% endif %}
+                </td>
+                <td>
+                    {% if not user.is_staff %}
+                    <form method="post" action="{% url 'remove_user' user.id %}">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-danger btn-sm">Remove</button>
+                    </form>
                     {% endif %}
                 </td>
             </tr>
