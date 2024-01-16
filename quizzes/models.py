@@ -21,7 +21,8 @@ class Quiz(models.Model):
     has_time_limit = models.BooleanField(default=False)
 
     def __str__(self):
-        return f'{self.title} - {self.questions.count()} questions'
+        return self.title
+        # return f'{self.title} - {self.questions.count()} questions'
     
     # def clean(self):
     #     # Ensure the quiz has at least 5 and at most 50 questions

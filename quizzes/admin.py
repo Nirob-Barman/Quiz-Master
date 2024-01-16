@@ -31,6 +31,13 @@ class ChoiceAdmin(admin.StackedInline):
 
 class QuestionAdmin(admin.ModelAdmin):
     inlines = [ChoiceAdmin]
+    extra = 1  # Number of choices to display for each question
+    list_display = ('category', 'quizQuestion', 'quizMark')
+    ordering = ('quiz__category__name', 'id')
+
+    def category(self, obj):
+        # return obj.question.quiz.category.name
+        return obj.quiz.category
 
 
 admin.site.register(Question, QuestionAdmin)
