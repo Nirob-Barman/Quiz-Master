@@ -21,7 +21,7 @@ def quiz_view(request, quiz_id):
                 f'question_{question.id}_choice')
             print(
                 f"Question ID: {question.id}, Selected Choice ID: {selected_choice_id}")
-            
+
             # Print the IDs of all choices for debugging
             for choice in question.choice_set.all():
                 print(f"Choice ID: {choice.id}")
@@ -79,22 +79,34 @@ def quiz_history(request, username):
 
     return render(request, 'quiz_history.html', context)
 
-def home(request, category_slug=None):
-    categories = Category.objects.all()
-    selected_category = None
-    quizzes = Quiz.objects.all()
 
-    if category_slug:
-        selected_category = get_object_or_404(Category, slug=category_slug)
-        quizzes = Quiz.objects.filter(category=selected_category)
+def leaderboard(request):
+    # Get top scores from UserQuizHistory
+    top_scores = UserQuizHistory.objects.order_by('-score')[:10]
 
     context = {
-        'categories': categories,
-        'quizzes': quizzes,
-        'selected_category': selected_category,
+        'top_scores': top_scores,
     }
 
-    return render(request, 'home.html', context)
+    return render(request, 'leaderboard.html', context)
+
+# def home(request, category_slug=None):
+#     categories = Category.objects.all()
+#     selected_category = None
+#     quizzes = Quiz.objects.all()
+
+#     if category_slug:
+#         selected_category = get_object_or_404(Category, slug=category_slug)
+#         quizzes = Quiz.objects.filter(category=selected_category)
+
+#     context = {
+#         'categories': categories,
+#         'quizzes': quizzes,
+#         'selected_category': selected_category,
+#     }
+
+#     return render(request, 'home.html', context)
+
 
 def home(request, category_slug=None):
 
@@ -114,7 +126,7 @@ def home(request, category_slug=None):
         selected_category = Category.objects.get(slug=category_slug)
         print(selected_category)
         quizzes = quizzes.filter(category=selected_category)
-        
+
     quiz_data = []
     for quiz in quizzes:
         quiz_questions = Question.objects.filter(quiz=quiz)

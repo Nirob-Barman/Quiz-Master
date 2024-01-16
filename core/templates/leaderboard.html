@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container">
+    {% if top_scores %}
+        <h1 class="text-center">Quiz Leaderboard</h1>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Username</th>
+                    <th scope="col">Quiz Title</th>
+                    <th scope="col">Score</th>
+                    <th scope="col">Date Completed</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for score in top_scores %}
+                <tr>
+                    <td>{{ score.user.username }}</td>
+                    <td>{{ score.quiz.title }}</td>
+                    <td>{{ score.score }}/{{ score.quiz.questions.count }}</td>
+                    <td>{{ score.completed_at|date:"F j, Y, g:i a" }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <div style="height: 500px;" class="d-flex justify-content-center align-items-center">
+            <p>No scores available.</p>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}
