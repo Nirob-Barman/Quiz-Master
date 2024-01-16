@@ -81,7 +81,8 @@ def rate_quiz(request, quiz_id):
             rating = form.cleaned_data['rating']
             QuizRating.objects.create(
                 user=request.user, quiz=quiz, rating=rating)
-            return redirect('quiz_view', quiz_id=quiz.id)
+            # return redirect('quiz_view', quiz_id=quiz.id)
+            return redirect('rating_history')
     else:
         form = QuizRatingForm()
 
