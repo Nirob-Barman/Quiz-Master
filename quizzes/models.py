@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.core.validators import MinValueValidator, MaxValueValidator
 # Create your models here.
 
 
@@ -19,6 +20,17 @@ class Quiz(models.Model):
 
     def __str__(self):
         return self.title
+
+
+class QuizRating(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    quiz = models.ForeignKey(Quiz, on_delete=models.CASCADE)
+    rating = models.PositiveIntegerField(
+        validators=[MinValueValidator(1), MaxValueValidator(5)])
+
+    def __str__(self):
+        return f'{self.user.username} - {self.quiz.title} - {self.rating}'
+
 
 
 class Question(models.Model):

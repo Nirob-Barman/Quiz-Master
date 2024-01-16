@@ -1,3 +1,4 @@
+from django.shortcuts import render
 from django.shortcuts import render, get_object_or_404
 from django.shortcuts import render, redirect
 from quizzes.models import Quiz, Category, Question, Choice, UserQuizHistory
@@ -5,6 +6,9 @@ from django.contrib.auth.models import User
 from django.core.mail import send_mail
 from QuizMaster.settings import EMAIL_HOST_USER
 from django.db.models import Count, Q
+from quizzes.forms import QuizRatingForm
+from quizzes.models import QuizRating
+from django.contrib.auth.decorators import login_required
 
 
 def quiz_view(request, quiz_id):
@@ -65,6 +69,39 @@ def quiz_result(request, quiz_id):
         'user_quiz_history': user_quiz_history,
     }
     return render(request, 'quiz_result.html', context)
+
+
+@login_required
+def rate_quiz(request, quiz_id):
+    quiz = get_object_or_404(Quiz, id=quiz_id)
+
+    if request.method == 'POST':
+        form = QuizRatingForm(request.POST)
+        if form.is_valid():
+            rating = form.cleaned_data['rating']
+            QuizRating.objects.create(
+                user=request.user, quiz=quiz, rating=rating)
+            return redirect('quiz_view', quiz_id=quiz.id)
+    else:
+        form = QuizRatingForm()
+
+    context = {
+        'quiz': quiz,
+        'form': form,
+    }
+
+    return render(request, 'rate_quiz.html', context)
+
+
+def rating_history(request):
+    # Get all ratings
+    all_ratings = QuizRating.objects.all()
+
+    context = {
+        'all_ratings': all_ratings,
+    }
+
+    return render(request, 'rating_history.html', context)
 
 
 def quiz_history(request, username):

@@ -31,7 +31,6 @@
             {% for quiz in quizzes %}
             <li>
                 <h4>{{ quiz.title }}</h4>
-                <p>{{ quiz.description }}</p>
                 <p>Questions:</p>
                 <ul>
                     {% for question in quiz.questions.all %}

@@ -1,7 +1,10 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h1 class="text-center">{{ quiz.title }}</h1>
+<div class="d-flex justify-content-around align-items-center">
+    <h1 class="text-center">{{ quiz.title }}</h1>
+    <a class="text-decoration-none h1" href="{% url 'rate_quiz' quiz.id %}">Rate {{ quiz.title }}</a>
+</div>
 <div class="container">
     {% if questions %}
     <div id="progress-indicator"></div>
