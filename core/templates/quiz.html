@@ -31,7 +31,9 @@
             <div id="progress-bar"></div>
         </div>
         <button type="button" id="next-question">Next Question</button>
+        {% if user.is_authenticated and not user.is_staff %}
         <button type="button" id="submit-quiz" style="display: none;">Submit Quiz</button>
+        {% endif %}
     </form>
     {% else %}
     <p>No questions available.</p>
