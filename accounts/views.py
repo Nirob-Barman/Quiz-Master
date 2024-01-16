@@ -304,7 +304,7 @@ class UserLogoutView(View):
 
     def get(self, request):
         logout(request)
-        messages.info(request, "Logged Out Successfully")
+        # messages.info(request, "Logged Out Successfully")
         return redirect('home')
 
 
