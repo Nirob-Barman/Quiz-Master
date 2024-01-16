@@ -21,7 +21,7 @@
     <div class="btn-group d-flex justify-content-center gap-2 my-2">
         {% for category in customizeCategories %}
         <a class="btn btn-primary text-decoration-none rounded"
-            href="{% url 'quiz_view' category.name %}">{{category.name}}</a>
+            href="{% url 'quiz_view' category.name %}">{{category.name|title}}</a>
         {% endfor %}
     </div>
     {% endif %}
