@@ -10,7 +10,6 @@ class Category(models.Model):
     def __str__(self):
         return self.name
 
-
 class Quiz(models.Model):
     title = models.CharField(max_length=255)
     description = models.TextField()
@@ -24,6 +23,7 @@ class Quiz(models.Model):
 class Question(models.Model):
     quiz = models.ForeignKey(Quiz, on_delete=models.CASCADE, related_name='questions', default=1)
     quizQuestion = models.CharField(max_length=255)
+    quizMark = models.IntegerField(default=1)
 
     def __str__(self):
         return self.quizQuestion

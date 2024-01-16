@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1 class="text-center">Quiz History</h1>
+<div class="container">
+    <h2>{{ user.username }}'s Quiz History</h2>
+    {% if quiz_history %}
+    <ul>
+        {% for history in quiz_history %}
+        <li>
+            <p>Quiz: {{ history.quiz.title }}</p>
+            <p>Score: {{ history.score }} / {{ history.quiz.questions.count }}</p>
+            <p>Completed At: {{ history.completed_at }}</p>
+        </li>
+        {% endfor %}
+    </ul>
+    {% else %}
+    <p>No quiz history available.</p>
+    {% endif %}
+</div>
+{% endblock %}

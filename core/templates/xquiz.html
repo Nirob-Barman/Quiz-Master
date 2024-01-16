@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1 class="text-center">{{ quiz.title }}</h1>
+<div class="container">
+    {% if questions %}
+    <form method="post" id="quiz-form">
+        {% csrf_token %}
+        {% for question in questions %}
+        <div class="question">
+            <h4>{{ question.quizQuestion }}</h4>
+            {% for choice in question.choice_set.all %}
+            <label>
+                <input type="radio" name="question_{{ question.id }}_choice" value="{{ choice.id }}"
+                    data-is-correct="{% if choice.is_correct %}true{% else %}false{% endif %}" class="choice">
+                {{ choice.quizAnswer }}
+            </label>
+            {% endfor %}
+            <div class="feedback"></div>
+        </div>
+        {% endfor %}
+        <button type="button" id="submit-quiz">Submit Quiz</button>
+    </form>
+    {% else %}
+    <p>No questions available.</p>
+    {% endif %}
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('.choice').on('change', function () {
+            var selectedChoice = $(this);
+            var feedbackDiv = selectedChoice.closest('.question').find('.feedback');
+
+            // Use the Boolean function to convert the attribute value to a boolean
+            var isCorrect = Boolean(selectedChoice.data('is-correct'));
+
+            console.log('Is Correct:', isCorrect);
+
+            feedbackDiv.html(isCorrect ? '<span class="correct">Correct!</span>' : '<span class="incorrect">Incorrect</span>');
+            // Disable all radio buttons within the same question after one is clicked
+            // selectedChoice.closest('.question').find('.choice').prop('disabled', true);
+        });
+
+        $('#submit-quiz').on('click', function () {
+            // Your existing code for submitting the form
+            $('#quiz-form').submit();
+        });
+    });
+
+</script>
+{% endblock %}

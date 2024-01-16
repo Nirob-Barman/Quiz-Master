@@ -1,0 +1,86 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1 class="text-center">{{ quiz.title }}</h1>
+<div class="container">
+    {% if questions %}
+    <div id="progress-indicator"></div>
+    <form method="post" id="quiz-form">
+        {% csrf_token %}
+        <div class="question-container">
+            {% for question in questions %}
+            <div class="question {% if forloop.first %}active{% endif %}">
+                <h4>{{ question.quizQuestion }}</h4>
+                {% for choice in question.choice_set.all %}
+                <div class="my-1">
+                    <label>
+                        <input type="radio" name="question_{{ question.id }}_choice" value="{{ choice.id }}"
+                            data-is-correct="{% if choice.is_correct %}true{% else %}false{% endif %}" class="choice">
+                        {{ choice.quizAnswer }}
+                    </label>
+                </div>
+                {% endfor %}
+                <div style="width: 20%; margin: auto" class="feedback my-3 text-bg-info text-center"></div>
+            </div>
+            {% endfor %}
+        </div>
+        <div id="progress-bar-container">
+            <div id="progress-bar"></div>
+        </div>
+        <button type="button" id="next-question">Next Question</button>
+        <button type="button" id="submit-quiz" style="display: none;">Submit Quiz</button>
+    </form>
+    {% else %}
+    <p>No questions available.</p>
+    {% endif %}
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script>
+    $(document).ready(function () {
+        var currentQuestion = 1;
+        var totalQuestions = $('.question').length;
+        var progressBar = $('#progress-bar');
+
+        $('.question:not(.active)').hide();
+
+        $('#progress-indicator').text('Question ' + currentQuestion + ' of ' + totalQuestions);
+
+        $('.choice').on('change', function () {
+            var selectedChoice = $(this);
+            var feedbackDiv = selectedChoice.closest('.question').find('.feedback');
+            var isCorrect = Boolean(selectedChoice.data('is-correct'));
+
+            feedbackDiv.html(isCorrect ? '<span class="correct">Correct!</span>' : '<span class="incorrect">Incorrect</span>');
+
+            if (currentQuestion < totalQuestions) {
+                $('#next-question').show();
+            } else {
+                $('#submit-quiz').show();
+                $('#next-question').hide();
+            }
+
+            // Hide the radio buttons to make them non-interactive
+            selectedChoice.closest('.question').find('.choice').hide();
+        });
+
+        $('#next-question').on('click', function () {
+            $('.question.active').hide().removeClass('active');
+            $('.question:nth-child(' + (++currentQuestion) + ')').show().addClass('active');
+            $('#next-question').hide();
+
+            // Update progress bar
+            var progress = (currentQuestion / totalQuestions) * 100;
+            progressBar.width(progress + '%');
+
+            // Update progress indicator
+            $('#progress-indicator').text('Question ' + currentQuestion + ' of ' + totalQuestions);
+        });
+
+        $('#submit-quiz').on('click', function () {
+            // Your existing code for submitting the form
+            $('#quiz-form').submit();
+        });
+    });
+</script>
+{% endblock %}

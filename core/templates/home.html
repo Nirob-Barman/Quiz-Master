@@ -1,9 +1,14 @@
 {% extends 'base.html' %}
 
-
 {% block content %}
-<h1>Home</h1>
+<h1 class="text-center">Quiz Test</h1>
 <div class="container">
+    <div class="btn-group d-flex justify-content-center gap-2 my-2">
+        {% for category in categories %}
+        <a class="btn btn-primary text-decoration-none rounded" href="{% url 'quiz_view' category.id %}">{{category.name}}</a>
+        {% endfor %}
+    </div>
+
     <div class="container">
         <div class="btn-group d-flex justify-content-center gap-2">
             <a class="btn btn-primary text-decoration-none rounded" href="{% url 'home' %}">All Categories</a>
@@ -19,17 +24,12 @@
         <ul>
             {% for quiz in quizzes %}
             <li>
-                <h4>{{ quiz.quiz_title }}</h4>
-                <p>{{ quiz.quiz_description }}</p>
+                <h4>{{ quiz.title }}</h4>
+                <p>{{ quiz.description }}</p>
                 <p>Questions:</p>
                 <ul>
-                    {% for question in quiz.questions %}
-                    <li>{{ question.question_text }}</li>
-                    <ul>
-                        {% for choice in question.choices %}
-                        <li>{{ choice.quizAnswer }} - {% if choice.is_correct %}(Correct){% endif %}</li>
-                        {% endfor %}
-                    </ul>
+                    {% for question in quiz.questions.all %}
+                    <li>{{ question.quizQuestion }}</li>
                     {% endfor %}
                 </ul>
             </li>

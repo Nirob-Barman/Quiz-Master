@@ -19,12 +19,17 @@
         <ul>
             {% for quiz in quizzes %}
             <li>
-                <h4>{{ quiz.title }}</h4>
-                <p>{{ quiz.description }}</p>
+                <h4>{{ quiz.quiz_title }}</h4>
+                <p>{{ quiz.quiz_description }}</p>
                 <p>Questions:</p>
                 <ul>
-                    {% for question in quiz.questions.all %}
-                    <li>{{ question.quizQuestion }}</li>
+                    {% for question in quiz.questions %}
+                    <li>{{ question.question_text }}</li>
+                    <ul>
+                        {% for choice in question.choices %}
+                        <li>{{ choice.quizAnswer }} - {% if choice.is_correct %}(Correct){% endif %}</li>
+                        {% endfor %}
+                    </ul>
                     {% endfor %}
                 </ul>
             </li>

@@ -15,6 +15,9 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 {% if user.is_authenticated %}
+                <div class="nav-item">
+                    <a class="nav-link" href="{% url 'quiz_history' user.username %}">Quiz History</a>
+                </div>
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'privacy_settings' %}">Privacy Settings</a>
                 </li>
