@@ -5,6 +5,7 @@ urlpatterns = [
     # path('profile/', views.profile, name='profile'),
     path('profile/privacy_settings',
          views.privacy_settings, name='privacy_settings'),
+    path('admin/list_profiles/', views.list_profiles, name='list_profiles'),
     path('profile/edit_privacy_settings/',
          views.edit_privacy_settings, name='edit_privacy_settings'),
     path('signup/', views.signup, name='signup'),

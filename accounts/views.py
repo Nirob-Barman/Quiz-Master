@@ -132,6 +132,13 @@ def user_login(request):
 #     else:
 #         return redirect('login')
 
+@login_required
+def list_profiles(request):
+    if not request.user.is_staff:
+        return redirect('home')  # Redirect non-admin users
+
+    users = User.objects.all()
+    return render(request, 'list_profiles.html', {'users': users})
 
 def privacy_settings(request):
     if request.user.is_authenticated:
