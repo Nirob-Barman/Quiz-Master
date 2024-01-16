@@ -1,49 +1,32 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block content %}
-<h1 class="text-center">Quiz Test</h1>
 <div class="container">
-    {% if user.is_authenticated %}
-        {% if customizeCategories %}
-            <div class="btn-group d-flex justify-content-center gap-2 my-2">
-                {% for category in customizeCategories %}
-                <a class="btn btn-primary text-decoration-none rounded" href="{% url 'quiz_view' category.id %}">{{category.name}}</a>
-                {% endfor %}
-            </div>
-        {% endif %}
-    {% else %}
-        <p>Please <a href="{% url 'login' %}">login</a> to start the quiz.</p>
-    {% endif %}
-
-    <div class="container">
-        <div class="btn-group d-flex justify-content-center gap-2">
-            <a class="btn btn-primary text-decoration-none rounded" href="{% url 'home' %}">All Categories</a>
-            {% for category in categories %}
-            <a class="btn btn-primary text-decoration-none rounded"
-                href="{% url 'category_wise_quiz' category.slug %}">{{ category.name }}</a>
-            {% endfor %}
+    <div class="d-flex justify-content-center align-items-center gap-5">
+        <div>
+            <h2>Welcome to our Quiz Platform</h2>
+            <p>Test your knowledge with our exciting quizzes. Select a category below to get started!</p>
         </div>
-    </div>
-
-    <div>
-        {% if quizzes %}
-        <ul>
-            {% for quiz in quizzes %}
-            <li>
-                <h4>{{ quiz.title }}</h4>
-                <p>Questions:</p>
-                <ul>
-                    {% for question in quiz.questions.all %}
-                    <li>{{ question.quizQuestion }}</li>
-                    {% endfor %}
-                </ul>
-            </li>
-            {% endfor %}
-        </ul>
-        {% else %}
-        <p>No quizzes available.</p>
-        {% endif %}
+        <div class="banner">
+            <img src="{% static 'core/images/banner.jpg' %}" alt="Banner Image" class="img-fluid">
+        </div>
     </div>
 </div>
 
+<h1 class="text-center">Quiz Test</h1>
+<div class="container">
+    {% if user.is_authenticated %}
+    {% if customizeCategories %}
+    <div class="btn-group d-flex justify-content-center gap-2 my-2">
+        {% for category in customizeCategories %}
+        <a class="btn btn-primary text-decoration-none rounded"
+            href="{% url 'quiz_view' category.id %}">{{category.name}}</a>
+        {% endfor %}
+    </div>
+    {% endif %}
+    {% else %}
+    <p class="text-center">Please <a href="{% url 'login' %}">login</a> to start the quiz.</p>
+    {% endif %}
+</div>
 {% endblock %}

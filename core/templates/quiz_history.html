@@ -1,21 +1,29 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h1 class="text-center">Quiz History</h1>
-<div class="container">
-    <h2>{{ user.username }}'s Quiz History</h2>
+<div class="container mt-4">
+    <h1 class="text-center mb-4">{{ user.username|title }}'s Quiz History</h1>
     {% if quiz_history %}
-    <ul>
-        {% for history in quiz_history %}
-        <li>
-            <p>Quiz: {{ history.quiz.title }}</p>
-            <p>Score: {{ history.score }} / {{ history.quiz.questions.count }}</p>
-            <p>Completed At: {{ history.completed_at }}</p>
-        </li>
-        {% endfor %}
-    </ul>
+    <table class="table table-striped table-bordered text-center">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">Quiz</th>
+                <th scope="col">Score</th>
+                <th scope="col">Completed At</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for history in quiz_history %}
+            <tr>
+                <td>{{ history.quiz.title }}</td>
+                <td>{{ history.score }} / {{ history.quiz.questions.count }}</td>
+                <td>{{ history.completed_at }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
     {% else %}
-    <p>No quiz history available.</p>
+    <p class="text-center">No quiz history available.</p>
     {% endif %}
 </div>
 {% endblock %}

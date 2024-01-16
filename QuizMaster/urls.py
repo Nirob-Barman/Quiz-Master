@@ -21,7 +21,7 @@ from core.views import home, quiz_view, quiz_result, quiz_history, leaderboard, 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', home, name='home'),
-    path('category/<slug:category_slug>/', home, name='category_wise_quiz'),
+    # path('category/<slug:category_slug>/', home, name='category_wise_quiz'),
 
     path('quiz/<int:quiz_id>/', quiz_view, name='quiz_view'),
     path('quiz/<int:quiz_id>/result/', quiz_result, name='quiz_result'),
