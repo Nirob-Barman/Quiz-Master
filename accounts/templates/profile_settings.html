@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+
+{% load crispy_forms_tags %}
+
+{% block title %}Privacy Settings{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <div>
+                        <!-- Display messages -->
+                        {% if messages %}
+                        {% for message in messages %}
+                        <div style="width: 50%; margin: auto;" class="alert alert-{{message.tags}} text-center"
+                            role="alert">
+                            {{message}}
+                        </div>
+                        {% endfor %}
+                        {% endif %}
+                    </div>
+                    <h1 class="text-center mb-4">Welcome to Your Profile</h1>
+                    <h2 class="text-center mb-4">Hello, {{ user }}</h2>
+
+                    {% if user.is_staff %}
+                    <p class="text-center text-success">You are an admin!</p>
+                    {% else %}
+                    <p class="text-center text-info">You are a regular user.</p>
+                    {% endif %}
+
+                    <div class="text-center mb-3">
+                        <a href="{% url 'password_change' %}" class="btn btn-primary">Change Password</a>
+                    </div>
+
+                    <hr class="my-4">
+
+                    <div class="text-center mb-3">
+                        <a href="{% url 'password_change_without_old_password' %}" class="btn btn-secondary">Change
+                            Password without Old Password</a>
+                    </div>
+
+
+                    <!-- Add the form here -->
+                    <div class="mt-4">
+                        <div class="text-center">
+                            <a href="{% url 'edit_privacy_settings' %}" class="btn btn-warning">Update User Data</a>
+                        </div>
+                    </div>
+                    <!-- End of the form -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

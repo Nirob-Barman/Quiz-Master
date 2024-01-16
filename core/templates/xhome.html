@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+<h1>Home</h1>
+<div class="container">
+    <div class="container">
+        <div class="btn-group d-flex justify-content-center gap-2">
+            <a class="btn btn-primary text-decoration-none rounded" href="{% url 'home' %}">All Categories</a>
+            {% for category in categories %}
+            <a class="btn btn-primary text-decoration-none rounded"
+                href="{% url 'category_wise_quiz' category.slug %}">{{ category.name }}</a>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div>
+        {% if quizzes %}
+        <ul>
+            {% for quiz in quizzes %}
+            <li>
+                <h4>{{ quiz.title }}</h4>
+                <p>{{ quiz.description }}</p>
+                <p>Questions:</p>
+                <ul>
+                    {% for question in quiz.questions.all %}
+                    <li>{{ question.quizQuestion }}</li>
+                    {% endfor %}
+                </ul>
+            </li>
+            {% endfor %}
+        </ul>
+        {% else %}
+        <p>No quizzes available.</p>
+        {% endif %}
+    </div>
+</div>
+
+{% endblock %}
