@@ -30,7 +30,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = ["*"]
 CSRF_TRUSTED_ORIGINS = [
-    'https://quiz-master-x5cn.onrender.com', 'https://*.127.0.0.1']
+    'https://quiz-master-rw6k.onrender.com', 'https://*.127.0.0.1']
 
 
 # Application definition
