@@ -4,6 +4,7 @@ from quizzes.models import Quiz, Category, Question, Choice, UserQuizHistory
 from django.contrib.auth.models import User
 from django.core.mail import send_mail
 from QuizMaster.settings import EMAIL_HOST_USER
+from django.db.models import Count, Q
 
 
 def quiz_view(request, quiz_id):
@@ -96,6 +97,14 @@ def home(request, category_slug=None):
     return render(request, 'home.html', context)
 
 def home(request, category_slug=None):
+
+    # Filter categories with at least one quiz having both title and description
+    customizeCategories = Category.objects.annotate(
+        quiz_count=Count('quiz', filter=Q(
+            quiz__title__isnull=False, quiz__description__isnull=False))
+    ).filter(quiz_count__gt=0)
+    print(customizeCategories)
+
     categories = Category.objects.all()
     quizzes = Quiz.objects.all()
 
@@ -126,6 +135,7 @@ def home(request, category_slug=None):
 
     context = {
         'categories': categories,
+        'customizeCategories': customizeCategories,
         'quizzes': quizzes,
         # 'quizzes': quiz_data,
         'selected_category': selected_category,
