@@ -26,11 +26,10 @@ class QuizRating(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     quiz = models.ForeignKey(Quiz, on_delete=models.CASCADE)
     rating = models.PositiveIntegerField(
-        validators=[MinValueValidator(1), MaxValueValidator(5)])
+        validators=[MinValueValidator(1), MaxValueValidator(7)])
 
     def __str__(self):
         return f'{self.user.username} - {self.quiz.title} - {self.rating}'
-
 
 
 class Question(models.Model):

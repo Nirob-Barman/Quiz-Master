@@ -8,7 +8,7 @@ from QuizMaster.settings import EMAIL_HOST_USER
 from django.db.models import Count, Q
 from quizzes.forms import QuizRatingForm
 from quizzes.models import QuizRating
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, user_passes_test
 
 
 def quiz_view(request, quiz_id):
@@ -103,6 +103,12 @@ def rating_history(request):
 
     return render(request, 'rating_history.html', context)
 
+
+@user_passes_test(lambda u: u.is_staff)
+def delete_rating(request, rating_id):
+    rating = get_object_or_404(QuizRating, id=rating_id)
+    rating.delete()
+    return redirect('rating_history')
 
 def quiz_history(request, username):
     user = get_object_or_404(User, username=username)
