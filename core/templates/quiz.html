@@ -1,9 +1,10 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="d-flex justify-content-around align-items-center">
-    <h1 class="text-center">{{ quiz.title }}</h1>
-    <a class="text-decoration-none h1" href="{% url 'rate_quiz' quiz.id %}">Rate {{ quiz.title }}</a>
+<div class="d-flex justify-content-around align-items-center my-3">
+    <h3 class="text-center">{{ quiz.title }}</h3>
+    <h3>Marks: {{totalMarksOfAllQuestions}}</h3>
+    <a class="text-decoration-none h3" href="{% url 'rate_quiz' quiz.id %}">Rate {{ quiz.title }}</a>
 </div>
 <div class="container">
     {% if questions %}
@@ -13,7 +14,10 @@
         <div class="question-container">
             {% for question in questions %}
             <div class="question {% if forloop.first %}active{% endif %}">
-                <h4>{{ question.quizQuestion }}</h4>
+                <div class="d-flex align-items-center gap-5">
+                    <h4>{{ question.quizQuestion }}</h4>
+                    <h4>Marks: {{ question.quizMark }}</h4>
+                </div>
                 {% for choice in question.choice_set.all %}
                 <div class="my-1">
                     <label>

@@ -18,6 +18,7 @@ def quiz_view(request, category_slug):
     # Assuming you have a Quiz model with a 'category' field
     quiz = get_object_or_404(Quiz, category=category)
     questions = Question.objects.filter(quiz=quiz)
+    totalMarksOfAllQuestions = sum(question.quizMark for question in questions)
 
     if request.method == 'POST':
         # Handle form submission for each question
@@ -55,6 +56,7 @@ def quiz_view(request, category_slug):
     context = {
         'quiz': quiz,
         'questions': questions,
+        'totalMarksOfAllQuestions': totalMarksOfAllQuestions
     }
     return render(request, 'quiz.html', context)
 
