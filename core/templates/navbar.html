@@ -26,10 +26,13 @@
         </div>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                {% if user.is_authenticated %}
+                {% if user.is_authenticated and not user.is_staff %}
                 <div class="nav-item">
                     <a class="nav-link" href="{% url 'quiz_history' user.username %}">Quiz History</a>
                 </div>
+                {% endif %}
+
+                {% if user.is_authenticated %}
                 <div class="nav-item">
                     <a class="nav-link" href="{% url 'leaderboard' %}">Leaderboard</a>
                 </div>
