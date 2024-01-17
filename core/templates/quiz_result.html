@@ -3,12 +3,13 @@
 {% block content %}
 <h1 class="text-center">{{ quiz.title }} - Quiz Result</h1>
 <div class="container">
+    
+    <h3>Questions and Answers:</h3>
     <p>Your score: {{ user_quiz_history.score }} out of {{ user_quiz_history.totalMarks }}</p>
-
-    <h2>Questions and Answers:</h2>
     <table class="table table-bordered mt-4">
         <thead>
             <tr class="text-center">
+                <th>Question No.</th>
                 <th>Question</th>
                 <th>Your Answer</th>
                 <th>Correct Answer</th>
@@ -17,7 +18,8 @@
         <tbody>
             {% for question in quiz.questions.all %}
             <tr>
-                <td>{{ forloop.counter }}. {{ question.quizQuestion }}</td>
+                <td class="text-center">{{ forloop.counter }}</td>
+                <td>{{ question.quizQuestion }}</td>
                 <td class="text-center">
                     {% for choice in question.choice_set.all %}
                     {% if choice in user_quiz_history.selected_choices.all %}
