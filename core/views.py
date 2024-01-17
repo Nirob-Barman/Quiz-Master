@@ -150,7 +150,7 @@ def rate_quiz(request, quiz_id):
 
 def rating_history(request):
     # Get all ratings
-    all_ratings = QuizRating.objects.all()
+    all_ratings = QuizRating.objects.all().order_by('-rating')
 
     context = {
         'all_ratings': all_ratings,
@@ -215,23 +215,6 @@ def remove_user(request, user_id):
 
     user.delete()
     return redirect('list_profiles')
-
-# def home(request, category_slug=None):
-#     categories = Category.objects.all()
-#     selected_category = None
-#     quizzes = Quiz.objects.all()
-
-#     if category_slug:
-#         selected_category = get_object_or_404(Category, slug=category_slug)
-#         quizzes = Quiz.objects.filter(category=selected_category)
-
-#     context = {
-#         'categories': categories,
-#         'quizzes': quizzes,
-#         'selected_category': selected_category,
-#     }
-
-#     return render(request, 'home.html', context)
 
 
 def home(request, category_slug=None):
