@@ -25,12 +25,14 @@ def quiz_view(request, category_slug):
         # Handle form submission for each question
         score = 0
         totalMarks = 0
+        selected_choices = []
         for question in questions:
             totalMarks += question.quizMark
             selected_choice_id = request.POST.get(
                 f'question_{question.id}_choice')
 
             selected_choice = get_object_or_404(Choice, id=selected_choice_id)
+            selected_choices.append(selected_choice)
 
             # Check if the selected choice is correct
             if selected_choice.is_correct:
@@ -41,6 +43,7 @@ def quiz_view(request, category_slug):
         user_quiz_history = UserQuizHistory(
             user=request.user, quiz=quiz, score=score, totalMarks=totalMarks)
         user_quiz_history.save()
+        user_quiz_history.selected_choices.set(selected_choices)
 
         # Send email to the user
         subject = 'Quiz Completion'

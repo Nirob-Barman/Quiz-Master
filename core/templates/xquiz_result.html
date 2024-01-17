@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1 class="text-center">{{ quiz.title }} - Quiz Result</h1>
+<div class="container">
+    <p>Your score: {{ user_quiz_history.score }} out of {{ user_quiz_history.totalMarks }}</p>
+
+    <h2>Questions and Answers:</h2>
+    {% for question in quiz.questions.all %}
+    <div>
+        <p>{{ forloop.counter }}. {{ question.quizQuestion }}</p>
+        {% for choice in question.choice_set.all %}
+        {% if choice in user_quiz_history.selected_choices.all %}
+        {% if choice.is_correct %}
+        <p class="text-success">{{ choice.quizAnswer }} (Your answer - Correct)</p>
+        {% else %}
+        <p class="text-danger">{{ choice.quizAnswer }} (Your answer - Incorrect)</p>
+        {% endif %}
+        {% elif choice.is_correct %}
+        <p class="text-success">{{ choice.quizAnswer }} (Correct answer)</p>
+        {% else %}
+        <p>{{ choice.quizAnswer }}</p>
+        {% endif %}
+        {% endfor %}
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

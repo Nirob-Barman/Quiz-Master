@@ -73,6 +73,8 @@ class UserQuizHistory(models.Model):
     score = models.IntegerField()
     totalMarks = models.IntegerField(default=0)
     completed_at = models.DateTimeField(auto_now_add=True)
+    selected_choices = models.ManyToManyField(
+        Choice, related_name='selected_choices', blank=True)
 
     def __str__(self):
         return self.user.username

@@ -4,5 +4,41 @@
 <h1 class="text-center">{{ quiz.title }} - Quiz Result</h1>
 <div class="container">
     <p>Your score: {{ user_quiz_history.score }} out of {{ user_quiz_history.totalMarks }}</p>
+
+    <h2>Questions and Answers:</h2>
+    <table class="table table-bordered mt-4">
+        <thead>
+            <tr class="text-center">
+                <th>Question</th>
+                <th>Your Answer</th>
+                <th>Correct Answer</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for question in quiz.questions.all %}
+            <tr>
+                <td>{{ forloop.counter }}. {{ question.quizQuestion }}</td>
+                <td class="text-center">
+                    {% for choice in question.choice_set.all %}
+                    {% if choice in user_quiz_history.selected_choices.all %}
+                    {% if choice.is_correct %}
+                    <span>{{ choice.quizAnswer }} (Correct)</span><br>
+                    {% else %}
+                    <span>{{ choice.quizAnswer }} (Incorrect)</span><br>
+                    {% endif %}
+                    {% endif %}
+                    {% endfor %}
+                </td>
+                <td class="text-center">
+                    {% for choice in question.choice_set.all %}
+                    {% if choice.is_correct %}
+                    <span>{{ choice.quizAnswer }}</span><br>
+                    {% endif %}
+                    {% endfor %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 </div>
 {% endblock %}
