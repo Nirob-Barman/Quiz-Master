@@ -62,10 +62,13 @@ def signup(request):
                 user.is_active = False  # The user is inactive until activation
                 user.save()
 
+                # Generate activation link with the correct domain
+                current_site = get_current_site(request)
                 # Generate activation link
                 token = default_token_generator.make_token(user)
                 uid = urlsafe_base64_encode(force_bytes(user.pk))
-                confirm_link = f'http://127.0.0.1:8000/accounts/activate/{uid}/{token}'
+                # confirm_link = f'http://127.0.0.1:8000/accounts/activate/{uid}/{token}'
+                confirm_link = f'http://{current_site.domain}/accounts/activate/{uid}/{token}'
 
                 # Send activation email
                 email_subject = "Confirm your email"
