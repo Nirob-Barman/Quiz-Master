@@ -86,7 +86,8 @@ def signup(request):
                     request, 'Check your email and click on the link to activate your account.')
                 # return redirect('login')
                 return redirect('signup')
-
+            else:
+                messages.error(request, 'Please correct the error below.')
         else:
             form = forms.RegisterForm()
 
