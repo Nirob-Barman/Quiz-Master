@@ -18,7 +18,8 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
-from core.views import home, quiz_view, quiz_result, quiz_history, leaderboard, rate_quiz, rating_history, delete_rating, remove_user, QuizCreationContestView, generate_certificate
+# from core.views import home, quiz_view, quiz_result, quiz_history, leaderboard, rate_quiz, rating_history, delete_rating, remove_user, QuizCreationContestView, generate_certificate, download_certificate
+from core.views import *
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -36,6 +37,7 @@ urlpatterns = [
     path('quiz_creation_contest/', QuizCreationContestView.as_view(),
          name='quiz_creation_contest'),
     path('generate_certificate/<int:history_id>/', generate_certificate, name='generate_certificate'),
+    path('download_certificate/<int:history_id>/', download_certificate, name='download_certificate'),
     path('remove_user/<int:user_id>/', remove_user, name='remove_user'),
     path('accounts/', include('accounts.urls')),
     # path('core/', include('core.urls')),

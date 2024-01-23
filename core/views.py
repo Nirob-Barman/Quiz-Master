@@ -15,6 +15,8 @@ from django.http import HttpResponse
 from django.template.loader import get_template
 from django.views.decorators.csrf import csrf_exempt
 
+from xhtml2pdf import pisa  # Install xhtml2pdf using pip
+
 @login_required
 def quiz_view(request, category_slug):
     # Assuming you have a Category model with a 'slug' field
@@ -309,3 +311,24 @@ def generate_certificate(request, history_id):
     # history.certificate.save(f'certificate_{history_id}.pdf', File(pdf_file))
 
     return HttpResponse(html_content)
+
+
+def download_certificate(request, history_id):
+    history = get_object_or_404(UserQuizHistory, id=history_id)
+
+    template_path = 'certificate_template.html'
+    context = {'user': history.user, 'history': history}
+
+    # Render HTML content
+    template = get_template(template_path)
+    html = template.render(context)
+
+    # Create a PDF file
+    response = HttpResponse(content_type='application/pdf')
+    response['Content-Disposition'] = f'attachment; filename=certificate_{
+        history_id}.pdf'
+    pisa_status = pisa.CreatePDF(html, dest=response)
+
+    if pisa_status.err:
+        return HttpResponse('We had some errors with code %s <pre>%s</pre>' % (pisa_status.err, html))
+    return response

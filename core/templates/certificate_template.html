@@ -6,51 +6,55 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Certificate of Completion</title>
     <style>
+        /* Add your certificate styles here */
         body {
-            font-family: 'Arial', sans-serif;
+            font-family: Arial, sans-serif;
             text-align: center;
-            margin: 30px;
-            background-color: #f5f5f5;
-            color: #333;
+            margin: 20px;
         }
 
         .certificate {
             border: 2px solid #007BFF;
             padding: 20px;
-            border-radius: 15px;
-            background-color: #fff;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             max-width: 600px;
             margin: auto;
         }
 
         h1 {
             color: #007BFF;
-            margin-bottom: 20px;
         }
 
         p {
+            color: #495057;
             font-size: 18px;
-            line-height: 1.6;
-            margin-bottom: 15px;
         }
 
         .signature {
-            margin-top: 30px;
-            font-style: italic;
-            color: #888;
+            margin-top: 20px;
+            font-weight: bold;
+        }
+
+        .download-btn {
+            background-color: #007BFF;
+            color: #fff;
+            padding: 10px;
+            text-decoration: none;
+            margin-top: 20px;
+            display: inline-block;
+            border-radius: 5px;
         }
     </style>
 </head>
 
 <body>
     <div class="certificate">
-        <h1>Certificate of Completion</h1>
+        <h1>Certificate of Quiz Completion</h1>
         <p>This is to certify that <strong>{{ user.username }}</strong> has successfully completed the quiz
-            <strong>{{ history.quiz.title }}</strong> with a score of <strong>{{ history.score }} out of {{ history.totalMarks }}</strong>.
+            <strong>{{ history.quiz.title }}</strong> with a score of <strong>{{ history.score }} out of {{history.totalMarks }}</strong>.
         </p>
         <p>Issued on: {{ history.completed_at|date:"F j, Y" }}</p>
         <div class="signature">Quiz Master</div>
+        <a href="{% url 'download_certificate' history.id %}" class="download-btn">Download Certificate</a>
     </div>
 </body>
 
