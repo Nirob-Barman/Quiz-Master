@@ -1,13 +1,9 @@
 <!-- about_us.html -->
 {% extends 'base.html' %}
+{% load static %}
 
 {% block content %}
 <div class="container">
-    <h2 class="text-center">Our Platform</h2>
-    <p>Welcome to Quiz Master! We are an online platform dedicated to providing a diverse and engaging quiz experience.
-        Whether you're a trivia enthusiast, a lifelong learner, or someone looking for a fun challenge, Quiz Master has
-        something for you. Explore our categories and test your knowledge across a variety of topics.</p>
-
     <h2 class="text-center">Our Mission</h2>
     <p>At Quiz Master, our mission is to make learning fun and accessible to everyone. We believe in the power of
         quizzes to spark curiosity, enhance knowledge retention, and promote a love for learning. Our platform aims to
@@ -17,17 +13,32 @@
     <p>Quiz Master is brought to you by a passionate and dedicated team committed to creating a vibrant learning
         community. Get to know the faces behind the platform:</p>
 
-    <!-- Add team member details -->
-    <div class="team-member">
-        
-        <h3>John Doe</h3>
-        <p>Co-Founder & CEO</p>
-    </div>
-
-    <div class="team-member">
-        
-        <h3>Jane Smith</h3>
-        <p>Co-Founder & CTO</p>
+    <!-- Center the team members in the middle -->
+    <div class="d-flex justify-content-center">
+        <!-- Team member card 1 -->
+        <div class="card text-center mx-2">
+            <div class="text-center mt-2">
+                <img src="{% static 'core/profiles/profile2.jpg' %}" alt="John Doe" class="card-img-top rounded"
+                    style="width: 100px; height: 100px;">
+            </div>
+            
+            <div class="card-body">
+                <h3 class="card-title">John Doe</h3>
+                <p class="card-text">Co-Founder & CEO</p>
+            </div>
+        </div>
+    
+        <!-- Team member card 2 -->
+        <div class="card text-center mx-2">
+            <div class="text-center mt-2">
+                <img src="{% static 'core/profiles/profile.jpg' %}" alt="Jane Smith" class="card-img-top rounded"
+                    style="width: 100px; height: 100px;">
+            </div>
+            <div class="card-body">
+                <h3 class="card-title">Jane Smith</h3>
+                <p class="card-text">Co-Founder & CTO</p>
+            </div>
+        </div>
     </div>
 
 
