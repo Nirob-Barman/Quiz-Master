@@ -20,10 +20,10 @@
             <div class="col-md-4 col-sm-12 mb-4">
                 <h3>Quick Links</h3>
                 <ul class="list-unstyled">
-                    <li><a href="{% url 'home' %}">Home</a></li>
-                    <li><a href="">Quizzes</a></li>
-                    <li><a href="">About</a></li>
-                    <li><a href="">Contact</a></li>
+                    <li><a class="text-decoration-none" href="{% url 'home' %}">Home</a></li>
+                    <li><a class="text-decoration-none" href="">Quizzes</a></li>
+                    <li><a class="text-decoration-none" href="">About</a></li>
+                    <li><a class="text-decoration-none" href="">Contact</a></li>
                 </ul>
             </div>
 
@@ -35,7 +35,7 @@
         </div>
     </div>
 
-    <div class="text-center py-3 bg-light">
-        <p>&copy; {% now "Y" %} Quiz Master. All rights reserved.</p>
+    <div class="text-center py-3 bg-dark text-white">
+        <p>&copy; {% now "Y" %} Quiz Master by Nirob Barman. All rights reserved.</p>
     </div>
 </footer>
