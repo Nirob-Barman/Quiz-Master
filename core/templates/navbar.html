@@ -1,3 +1,21 @@
+<style>
+    /* Add this style block to your HTML file or your CSS file */
+
+    /* Add a class to the navigation items that you want to animate */
+    .nav-item {
+        opacity: 0;
+        /* Set initial opacity to 0 */
+        transition: opacity 0.8s ease-in-out;
+        /* Add a smooth transition */
+    }
+
+    /* Add a class to the navigation items that you want to animate */
+    .nav-item.fade-in {
+        opacity: 1;
+        /* Set final opacity to 1 */
+    }
+</style>
+
 <nav class="navbar navbar-expand-lg bg-body-tertiary">
     <div class="container-fluid">
         <a class="navbar-brand" href="{% url 'home' %}">Quiz Master</a>
@@ -5,27 +23,21 @@
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
+
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                 <li class="nav-item">
                     <a class="nav-link active" aria-current="page" href="{% url 'home' %}">Home</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'rating_history' %}">Rating History</a>
                 </li>
-            </ul>
-        </div>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 {% if user.is_staff %}
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="{% url 'list_profiles' %}">List Profiles</a>
+                    <a class="nav-link" aria-current="page" href="{% url 'list_profiles' %}">List Profiles</a>
                 </li>
                 {% endif %}
-            </ul>
-        </div>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+
                 {% if user.is_authenticated and not user.is_staff %}
                 <div class="nav-item">
                     <a class="nav-link" href="{% url 'quiz_history' user.username %}">Quiz History</a>
@@ -54,3 +66,18 @@
         </div>
     </div>
 </nav>
+
+<script>
+    // Add this script to your HTML file
+
+    // Add a function to add the fade-in class to your navigation items
+    function addFadeInEffect() {
+        var navItems = document.querySelectorAll('.nav-item');
+        navItems.forEach(function (item) {
+            item.classList.add('fade-in');
+        });
+    }
+
+    // Call the function after the page loads
+    document.addEventListener('DOMContentLoaded', addFadeInEffect);
+</script>
