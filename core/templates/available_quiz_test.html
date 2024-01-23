@@ -1,5 +1,10 @@
 <div class="container">
     <h1 class="text-center my-3">Available Quiz Test</h1>
+
+    {% if not user.is_authenticated %}
+    <p class="text-center">Please <a href="{% url 'login' %}">login</a> to start the quiz.</p>
+    {% endif %}
+
     <div
         class="swiffy-slider slider-item-show2 slider-item-reveal slider-nav-outside slider-nav-round slider-nav-visible slider-indicators-outside slider-indicators-round slider-indicators-dark slider-nav-animation slider-nav-animation-fadein">
         <ul class="slider-container py-4">
@@ -13,10 +18,12 @@
                         <h3 class="card-title h5">{{ quiz.title }}</h3>
                         <p style="height: 70px;" class="card-text overflow-y-auto">{{ quiz.description }}</p>
                         <!-- <p class="card-text" style="height: clamp(30px, 10vw, 100px)">{{ quiz.description }}</p> -->
+                        {% if user.is_authenticated %}
                         <div class="text-center">
                             <a href="{% url 'quiz_view' quiz.category.name %}" class="btn btn-primary text-decoration-none rounded"> View {{ quiz.category.name|title }} Quizzes
                             </a>
                         </div>
+                        {% endif %}
                     </div>
                 </div>
             </li>
