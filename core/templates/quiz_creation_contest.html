@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Quiz Creation Contest{% endblock %}
+
+{% block content %}
+
+<div class="container mt-5">
+    <h1 class="text-center mb-4">Quiz Creation Contest</h1>
+
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <p class="lead">
+                Do you have a passion for creating engaging quizzes? Participate in our Quiz Creation Contest and
+                showcase your creativity!
+            </p>
+
+            <p>
+                Follow the guidelines below to submit your quiz entry and stand a chance to win exciting prizes.
+            </p>
+
+            <h3>Contest Guidelines:</h3>
+            <ul>
+                <li>Your quiz must be original and not infringe on any copyrights.</li>
+                <li>Ensure that the quiz content is accurate and relevant to the chosen category.</li>
+                <li>Include a minimum of 10 questions in your quiz.</li>
+                <li>Submit your quiz by [submission deadline].</li>
+            </ul>
+
+            <h3>How to Participate:</h3>
+            <ol>
+                <li>Login to your account or <a href="{% url 'signup' %}">register</a> if you don't have an account.
+                </li>
+                <li>Create a new quiz by selecting the "Create Quiz" option in your dashboard.</li>
+                <li>Follow the prompts to add questions, answers, and other details.</li>
+                <li>Tag your quiz with "ContestEntry" to be considered for the contest.</li>
+                <li>Submit your quiz for review.</li>
+            </ol>
+
+            <p class="text-center mt-4">
+                <a href="" class="btn btn-primary">Go to Dashboard</a>
+            </p>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

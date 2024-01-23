@@ -1,50 +1,58 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block content %}
-<div class="container my-5">
+
+
+    <div class="container my-5">
     <div class="d-flex justify-content-between align-items-center">
         <h3 class="text-center">{{ quiz.title }}</h3>
         <h3 class="text-secondary">Total Marks: {{ totalMarksOfAllQuestions }}</h3>
-        <a class="btn btn-outline-primary" href="{% url 'rate_quiz' quiz.id %}">Rate {{ quiz.title }}</a>
+        <a class="btn btn-success" href="{% url 'rate_quiz' quiz.id %}">Rate {{ quiz.title }}</a>
     </div>
 
     {% if questions %}
     <div id="progress-indicator" class="my-4"></div>
-    <form method="post" id="quiz-form">
-        {% csrf_token %}
-        <div class="question-container">
-            {% for question in questions %}
-            <div class="card question {% if forloop.first %}active{% endif %} mb-4">
-                <div class="card-body">
-                    <div class="d-flex justify-content-between align-items-center mb-3">
-                        <h4 class="card-title">{{ question.quizQuestion }}</h4>
-                        <span class="badge badge-info">Marks: {{ question.quizMark }}</span>
+    <div class="d-flex justify-content-around gap-5">
+        <form method="post" id="quiz-form" class="col-6">
+            {% csrf_token %}
+            <div class="question-container">
+                {% for question in questions %}
+                <div class="card question {% if forloop.first %}active{% endif %} mb-4">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <h4 class="card-title">{{ question.quizQuestion }}</h4>
+                            <span class="badge badge-info">Marks: {{ question.quizMark }}</span>
+                        </div>
+                        {% for choice in question.choice_set.all %}
+                        <div class="custom-control custom-radio my-2">
+                            <input type="radio" id="choice{{ choice.id }}" name="question_{{ question.id }}_choice"
+                                value="{{ choice.id }}"
+                                data-is-correct="{% if choice.is_correct %}true{% else %}false{% endif %}"
+                                class="custom-control-input choice">
+                            <label class="custom-control-label" for="choice{{ choice.id }}">{{ choice.quizAnswer }}</label>
+                        </div>
+                        {% endfor %}
+                        <div class="feedback my-3 text-center"></div>
                     </div>
-                    {% for choice in question.choice_set.all %}
-                    <div class="custom-control custom-radio my-2">
-                        <input type="radio" id="choice{{ choice.id }}" name="question_{{ question.id }}_choice"
-                            value="{{ choice.id }}"
-                            data-is-correct="{% if choice.is_correct %}true{% else %}false{% endif %}"
-                            class="custom-control-input choice">
-                        <label class="custom-control-label" for="choice{{ choice.id }}">{{ choice.quizAnswer }}</label>
-                    </div>
-                    {% endfor %}
-                    <div class="feedback my-3 text-center"></div>
+                </div>
+                {% endfor %}
+            </div>
+            <div id="progress-bar-container" class="mb-4">
+                <div id="progress-bar" class="progress bg-primary">
+                    <div class="progress-bar" role="progressbar" style="width: 0%" aria-valuenow="0" aria-valuemin="0"
+                        aria-valuemax="100"></div>
                 </div>
             </div>
-            {% endfor %}
+            <button type="button" id="next-question" class="btn btn-primary">Next Question</button>
+            {% if user.is_authenticated and not user.is_staff %}
+            <button type="button" id="submit-quiz" class="btn btn-success" style="display: none;">Submit Quiz</button>
+            {% endif %}
+        </form>
+        <div class="col-6">
+            <img src="{% static 'core/images/quiz.jpg' %}" alt="Banner Image" class="img-fluid">
         </div>
-        <div id="progress-bar-container" class="mb-4">
-            <div id="progress-bar" class="progress bg-black">
-                <div class="progress-bar" role="progressbar" style="width: 0%" aria-valuenow="0" aria-valuemin="0"
-                    aria-valuemax="100"></div>
-            </div>
-        </div>
-        <button type="button" id="next-question" class="btn btn-primary">Next Question</button>
-        {% if user.is_authenticated and not user.is_staff %}
-        <button type="button" id="submit-quiz" class="btn btn-success" style="display: none;">Submit Quiz</button>
-        {% endif %}
-    </form>
+    </div>
     {% else %}
     <p class="text-center">No questions available.</p>
     {% endif %}
@@ -67,7 +75,9 @@
             var feedbackDiv = selectedChoice.closest('.question').find('.feedback');
             var isCorrect = Boolean(selectedChoice.data('is-correct'));
 
-            feedbackDiv.html(isCorrect ? '<span class="correct">Correct!</span>' : '<span class="incorrect">Incorrect</span>');
+            feedbackDiv.html(isCorrect ? '<span class="correct"><i class="fa-solid fa-check fa-3x"></i></span>' : '<span class="incorrect"><i class="fa-solid fa-xmark fa-3x"></i></span>');
+            // feedbackDiv.html(isCorrect ? '<span class="correct">Correct!</span>' : '<span class="incorrect">Incorrect</span>');
+
 
             if (currentQuestion < totalQuestions) {
                 $('#next-question').show();

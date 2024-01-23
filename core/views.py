@@ -9,6 +9,7 @@ from django.db.models import Count, Q
 from quizzes.forms import QuizRatingForm
 from quizzes.models import QuizRating
 from django.contrib.auth.decorators import login_required, user_passes_test
+from django.views import View
 
 
 @login_required
@@ -48,7 +49,8 @@ def quiz_view(request, category_slug):
         # Send email to the user
         subject = 'Quiz Completion'
         # message = f'Thank you for completing the quiz "{quiz.title}". Your score is {score}/{len(questions)}.'
-        message = f'Thank you for completing the quiz "{quiz.title}". Your score is {score}/{totalMarks}.'
+        message = f'Thank you for completing the quiz "{
+            quiz.title}". Your score is {score}/{totalMarks}.'
         from_email = EMAIL_HOST_USER
         recipient_list = [request.user.email]
 
@@ -207,6 +209,7 @@ def leaderboard(request):
 
 #         return render(request, 'leaderboard.html', context)
 
+
 @user_passes_test(lambda u: u.is_staff)
 def remove_user(request, user_id):
     user = get_object_or_404(User, id=user_id)
@@ -269,3 +272,10 @@ def home(request, category_slug=None):
     # }
 
     return render(request, 'home.html', context)
+
+
+class QuizCreationContestView(View):
+    template_name = 'quiz_creation_contest.html'
+
+    def get(self, request, *args, **kwargs):
+        return render(request, self.template_name)

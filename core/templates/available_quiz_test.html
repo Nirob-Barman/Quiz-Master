@@ -1,0 +1,66 @@
+<h1 class="text-center my-3">Available Quiz Test</h1>
+<div class="container">
+    <!-- {% if user.is_authenticated %}
+        {% if customizeCategories %}
+            {% if customizeCategories %}
+                <div class="btn-group d-flex justify-content-center gap-2 my-2">
+                    {% for category in customizeCategories %}
+                    <a class="btn btn-primary text-decoration-none rounded"
+                        href="{% url 'quiz_view' category.name %}">{{category.name|title}}</a>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endif %}
+    {% else %}
+        <p class="text-center">Please <a href="{% url 'login' %}">login</a> to start the quiz.</p>
+    {% endif %} -->
+
+
+    <div class="my-3">
+        {% if not user.is_authenticated %}
+        <p class="text-center">Please <a href="{% url 'login' %}">login</a> to start the quiz.</p>
+
+        <div>
+            {% if quizzes %}
+            <div class="row">
+                {% for quiz in quizzes %}
+                <div class="col-md-4 mb-4">
+                    <div class="card text-center">
+                        <div class="card-body">
+                            <h4 class="card-title">{{ quiz.title }}</h4>
+                            <p style="height: 100px;" class="card-text overflow-y-auto">{{ quiz.description }}</p>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            {% else %}
+            <p>No quizzes available.</p>
+            {% endif %}
+        </div>
+        {% endif %}
+        {% if user.is_authenticated %}
+        <div>
+            {% if quizzes %}
+            <div class="row">
+                {% for quiz in quizzes %}
+                <div class="col-md-4 mb-4">
+                    <div class="card text-center">
+                        <div class="card-body">
+                            <h4 class="card-title">{{ quiz.title }}</h4>
+                            <p style="height: clamp(30px, 10vw, 100px)" class="card-text overflow-y-auto">{{ quiz.description }}</p>
+                            <a class="btn btn-primary text-decoration-none rounded"
+                                href="{% url 'quiz_view' quiz.category.name %}">View {{ quiz.category.name|title }}
+                                Quizzes</a>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            {% else %}
+            <p>No quizzes available.</p>
+            {% endif %}
+        </div>
+        {% endif %}
+    </div>
+</div>

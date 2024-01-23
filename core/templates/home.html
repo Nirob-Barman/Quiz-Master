@@ -2,81 +2,23 @@
 {% load static %}
 
 {% block content %}
-<div class="container">
-    <div class="d-flex justify-content-center align-items-center gap-5">
-        <div>
-            <h2>Welcome to our Quiz Platform</h2>
-            <p>Test your knowledge with our exciting quizzes. Select a category below to get started!</p>
-        </div>
-        <div class="banner">
-            <img src="{% static 'core/images/banner.jpg' %}" alt="Banner Image" class="img-fluid">
-        </div>
-    </div>
+
+<div class="my-3">
+    {% include 'carousel.html' %}
 </div>
 
-<h1 class="text-center">Available Quiz Test</h1>
-<div class="container">
-    <!-- {% if user.is_authenticated %}
-        {% if customizeCategories %}
-            {% if customizeCategories %}
-                <div class="btn-group d-flex justify-content-center gap-2 my-2">
-                    {% for category in customizeCategories %}
-                    <a class="btn btn-primary text-decoration-none rounded"
-                        href="{% url 'quiz_view' category.name %}">{{category.name|title}}</a>
-                    {% endfor %}
-                </div>
-            {% endif %}
-        {% endif %}
-    {% else %}
-        <p class="text-center">Please <a href="{% url 'login' %}">login</a> to start the quiz.</p>
-    {% endif %} -->
+<!-- {% include 'banner.html' %} -->
 
+{% include 'available_quiz_test.html' %}
 
-    <div class="my-3">
-        {% if not user.is_authenticated %}
-            <p class="text-center">Please <a href="{% url 'login' %}">login</a> to start the quiz.</p>
-
-            <div>
-                {% if quizzes %}
-                <div class="row">
-                    {% for quiz in quizzes %}
-                    <div class="col-md-4 mb-4">
-                        <div class="card text-center">
-                            <div class="card-body">
-                                <h4 class="card-title">{{ quiz.title }}</h4>
-                                <p style="height: 100px;" class="card-text overflow-y-auto">{{ quiz.description }}</p>
-                            </div>
-                        </div>
-                    </div>
-                    {% endfor %}
-                </div>
-                {% else %}
-                <p>No quizzes available.</p>
-                {% endif %}
-            </div>
-        {% endif %}
-        {% if user.is_authenticated %}
-            <div>
-                {% if quizzes %}
-                <div class="row">
-                    {% for quiz in quizzes %}
-                    <div class="col-md-4 mb-4">
-                        <div class="card text-center">
-                            <div class="card-body">
-                                <h4 class="card-title">{{ quiz.title }}</h4>
-                                <p style="height: clamp(30px, 10vw, 100px)" class="card-text overflow-y-auto">{{ quiz.description }}</p>
-                                <a class="btn btn-primary text-decoration-none rounded"
-                                    href="{% url 'quiz_view' quiz.category.name %}">View {{ quiz.category.name|title }} Quizzes</a>
-                            </div>
-                        </div>
-                    </div>
-                    {% endfor %}
-                </div>
-                {% else %}
-                <p>No quizzes available.</p>
-                {% endif %}
-            </div>
-        {% endif %}
-    </div>
+<!-- Add link to Quiz Creation Contest -->
+<div class="container mt-5">
+    <h3 class="text-center mb-4">Express Your Creativity with Our Quiz Creation Contest</h3>
+    <p class="text-center">
+        <a href="{% url 'quiz_creation_contest' %}" class="btn btn-primary">Join Our Quiz Creation Contest</a>
+    </p>
 </div>
+
+{% include 'educational_insights.html' %}
+
 {% endblock %}

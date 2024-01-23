@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load static %}
 {% load crispy_forms_tags %}
 
 {% block title %}{{title}}{% endblock %}
@@ -36,6 +37,29 @@
         {{field|as_crispy_field}}
     </div>
     {% endfor %} -->
+    {% if button_text == "Login" %}
+        <div style="height: auto;" class="row">
+            
+            
+            <div class="col-6">
+                {% for field in form %}
+                <div class="form-group">
+                    {{field.label_tag}}
+                    {{field}}
+                    {{field.errors|striptags}}
+                </div>
+                {% endfor %}
+                <input class="btn {{button_class}} mt-2" type="submit" value="{{button_text}}">
+            </div>
+
+            <div class="col-6">
+                <img src="{% static 'core/images/login2.jpg' %}" alt="Login Image" class="img-fluid">
+            </div>
+
+            
+        </div>
+    {% else %}
+
 
     {% for field in form %}
     <div class="form-group">
@@ -44,8 +68,9 @@
         {{field.errors|striptags}}
     </div>
     {% endfor %}
-
     <input class="btn {{button_class}} mt-2" type="submit" value="{{button_text}}">
+    {% endif %}
+
 
     {% if button_text == "Login" %}
     <p class="text-center">Don't have an account? <a href="{% url 'signup' %}">Sign Up</a></p>
