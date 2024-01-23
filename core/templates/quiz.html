@@ -30,8 +30,7 @@
                                 value="{{ choice.id }}"
                                 data-is-correct="{% if choice.is_correct %}true{% else %}false{% endif %}"
                                 class="custom-control-input choice">
-                            <label class="custom-control-label" for="choice{{ choice.id }}">{{ choice.quizAnswer
-                                }}</label>
+                            <label class="custom-control-label" for="choice{{ choice.id }}">{{ choice.quizAnswer }}</label>
                         </div>
                         {% endfor %}
                         <div class="feedback my-3 text-center"></div>

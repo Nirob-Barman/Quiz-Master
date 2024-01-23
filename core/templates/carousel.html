@@ -1,47 +1,35 @@
-<div id="carouselExample" class="carousel slide">
-    <div style="width: 80%; margin: auto;" class="carousel-inner">
-        <div class="carousel-item active">
-            <div class="d-flex align-items-center justify-content-center banner"
-                style="background-color: #f1f1f1; height: 300px;">
-                <div class="text-center">
-                    <h5>Quiz Test</h5>
-                    <p>Explore a variety of quizzes across different categories.</p>
+<div class="container">
+    {% if quizzes %}
+    <div class="swiffy-slider">
+        <ul class="slider-container">
+            {% for quiz in quizzes %}
+            <li class="slider-item">
+                <div class="d-flex align-items-center justify-content-center banner" style="background-color: #f1f1f1; height: 300px; 
+                    /* background-image: url('{{ quiz.image.url }}'); 
+                    background-size: cover; 
+                    background-position: center; 
+                    background-repeat: no-repeat;
+                    width: 100%;
+                    height: 50vh; */
+                    ">
+                    <div class="text-center">
+                        <h4 class="card-title">{{ quiz.title }}</h4>
+                        <p style="width: 66%; margin: auto;">{{ quiz.description }}</p>
+                    </div>
                 </div>
-            </div>
+            </li>
+            {% endfor %}
+        </ul>
+    
+        <button type="button" class="slider-nav" aria-label="Go left"></button>
+        <button type="button" class="slider-nav slider-nav-next" aria-label="Go left"></button>
+    
+        <div class="slider-indicators">
+            {% for _ in quizzes %}
+            <button class=""></button>
+            {% endfor %}
         </div>
-        {% if quizzes %}
-        {% for quiz in quizzes %}
-        <div class="carousel-item">
-            <div class="d-flex align-items-center justify-content-center banner" style="background-color: #f1f1f1; height: 300px; 
-                /* background-image: url('{{ quiz.image.url }}'); 
-                background-size: cover; 
-                background-position: center; 
-                background-repeat: no-repeat;
-                width: 100%;
-                height: 50vh; */
-                ">
-                <div class="text-center">
-                    <h4 class="card-title">{{ quiz.title }}</h4>
-                    <p style="width: 66%; margin: auto;">{{ quiz.description }}</p>
-                    <!-- {% if not user.is_authenticated %}
-                    <p class="text-center">Please <a href="{% url 'login' %}">login</a> to start the quiz.</p>
-                    {% else %}
-                    <a class="btn btn-primary text-decoration-none rounded" href="{% url 'quiz_view' quiz.category.name %}">View {{ quiz.category.name|title }}
-                        Quizzes</a>
-                    {% endif %} -->
-
-                </div>
-            </div>
-        </div>
-        {% endfor %}
-        {% endif %}
     </div>
-    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
-        <span style="background-color: blue;" class="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Previous</span>
-    </button>
-    <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
-        <span style="background-color: blue;" class="carousel-control-next-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Next</span>
-    </button>
+    {% endif %}
+    
 </div>
