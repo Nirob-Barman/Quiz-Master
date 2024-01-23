@@ -49,8 +49,7 @@ def quiz_view(request, category_slug):
         # Send email to the user
         subject = 'Quiz Completion'
         # message = f'Thank you for completing the quiz "{quiz.title}". Your score is {score}/{len(questions)}.'
-        message = f'Thank you for completing the quiz "{
-            quiz.title}". Your score is {score}/{totalMarks}.'
+        message = f'Thank you for completing the quiz "{quiz.title}". Your score is {score}/{totalMarks}.'
         from_email = EMAIL_HOST_USER
         recipient_list = [request.user.email]
 
