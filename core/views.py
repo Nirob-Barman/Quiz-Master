@@ -325,8 +325,7 @@ def download_certificate(request, history_id):
 
     # Create a PDF file
     response = HttpResponse(content_type='application/pdf')
-    response['Content-Disposition'] = f'attachment; filename=certificate_{
-        history_id}.pdf'
+    response['Content-Disposition'] = f'attachment; filename=certificate_{history_id}.pdf'
     pisa_status = pisa.CreatePDF(html, dest=response)
 
     if pisa_status.err:
