@@ -4,7 +4,7 @@
 {% block content %}
 
 
-    <div class="container my-5">
+<div class="container my-5">
     <div class="d-flex justify-content-between align-items-center">
         <h3 class="text-center">{{ quiz.title }}</h3>
         <h3 class="text-secondary">Total Marks: {{ totalMarksOfAllQuestions }}</h3>
@@ -30,7 +30,8 @@
                                 value="{{ choice.id }}"
                                 data-is-correct="{% if choice.is_correct %}true{% else %}false{% endif %}"
                                 class="custom-control-input choice">
-                            <label class="custom-control-label" for="choice{{ choice.id }}">{{ choice.quizAnswer }}</label>
+                            <label class="custom-control-label" for="choice{{ choice.id }}">{{ choice.quizAnswer
+                                }}</label>
                         </div>
                         {% endfor %}
                         <div class="feedback my-3 text-center"></div>
@@ -50,7 +51,8 @@
             {% endif %}
         </form>
         <div class="col-6">
-            <img src="{% static 'core/images/quiz.jpg' %}" alt="Banner Image" class="img-fluid">
+            <!-- <img src="{% static 'core/images/quiz.jpg' %}" alt="Banner Image" class="img-fluid"> -->
+            <img src="{{ quiz.image.url }}" alt="{{ quiz.title }} Image" class="img-fluid">
         </div>
     </div>
     {% else %}

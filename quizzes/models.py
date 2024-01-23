@@ -19,6 +19,10 @@ class Quiz(models.Model):
     description = models.TextField()
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     has_time_limit = models.BooleanField(default=False)
+    created_at = models.DateTimeField(auto_now_add=True, editable=False)
+    updated_at = models.DateTimeField(auto_now=True)
+    image = models.ImageField(upload_to='quizzes/media/uploads', null=True,
+                              blank=True, help_text='Upload an image for the quiz')
 
     def __str__(self):
         return self.title
