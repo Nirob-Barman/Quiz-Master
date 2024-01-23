@@ -10,6 +10,7 @@
                 <th scope="col">Quiz</th>
                 <th scope="col">Score</th>
                 <th scope="col">Completed At</th>
+                <th scope="col">Certificate</th>
             </tr>
         </thead>
         <tbody>
@@ -18,6 +19,16 @@
                 <td>{{ history.quiz.title }}</td>
                 <td>{{ history.score }} / {{ history.totalMarks }}</td>
                 <td>{{ history.completed_at }}</td>
+                <td>
+                    {% if history.certificate %}
+                    <a href="{{ history.certificate.url }}" class="btn btn-success" download>Download Certificate</a>
+                    {% else %}
+                    <form action="{% url 'generate_certificate' history.id %}" method="post">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-primary">Generate Certificate</button>
+                    </form>
+                    {% endif %}
+                </td>
             </tr>
             {% endfor %}
         </tbody>

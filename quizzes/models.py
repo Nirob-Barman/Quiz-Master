@@ -80,6 +80,7 @@ class UserQuizHistory(models.Model):
     completed_at = models.DateTimeField(auto_now_add=True)
     selected_choices = models.ManyToManyField(
         Choice, related_name='selected_choices', blank=True)
+    certificate = models.FileField(upload_to='certificates/', blank=True, null=True)
 
     def __str__(self):
         return self.user.username

@@ -11,6 +11,9 @@ from quizzes.models import QuizRating
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.views import View
 
+from django.http import HttpResponse
+from django.template.loader import get_template
+from django.views.decorators.csrf import csrf_exempt
 
 @login_required
 def quiz_view(request, category_slug):
@@ -278,3 +281,31 @@ class QuizCreationContestView(View):
 
     def get(self, request, *args, **kwargs):
         return render(request, self.template_name)
+
+
+@login_required
+@csrf_exempt
+def generate_certificate(request, history_id):
+    history = get_object_or_404(UserQuizHistory, id=history_id)
+
+    # You can customize the certificate content here
+    certificate_content = f"Certificate of Completion\n\nThis is to certify that {request.user.username} has successfully completed the quiz {history.quiz.title} with a score of {history.score} out of {history.totalMarks}.\n\nDate: {history.completed_at}"
+
+    # Create an HTML response
+    template = get_template('certificate_template.html')
+    context = {'content': certificate_content, 'user': request.user, 'history': history}
+    html_content = template.render(context)
+
+    # Convert HTML to PDF (You may need to install the required library)
+    # Example using pdfkit: https://pypi.org/project/pdfkit/
+    # You can choose any other library or method for converting HTML to PDF
+    # pdf_content = pdfkit.from_string(html_content, False)
+
+    # Save the PDF to a file
+    # with open(f'certificate_{history_id}.pdf', 'wb') as pdf_file:
+    #     pdf_file.write(pdf_content)
+
+    # Save the certificate to UserQuizHistory model
+    # history.certificate.save(f'certificate_{history_id}.pdf', File(pdf_file))
+
+    return HttpResponse(html_content)
