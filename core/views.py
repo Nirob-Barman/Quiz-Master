@@ -331,3 +331,6 @@ def download_certificate(request, history_id):
     if pisa_status.err:
         return HttpResponse('We had some errors with code %s <pre>%s</pre>' % (pisa_status.err, html))
     return response
+
+def about_us(request):
+    return render(request, 'about_us.html')

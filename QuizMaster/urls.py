@@ -24,6 +24,7 @@ from core.views import *
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', home, name='home'),
+    path('about_us/', about_us, name='about_us'),
     # path('category/<slug:category_slug>/', home, name='category_wise_quiz'),
 
     # path('quiz/<int:quiz_id>/', quiz_view, name='quiz_view'),
