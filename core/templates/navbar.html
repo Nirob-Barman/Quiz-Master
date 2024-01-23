@@ -24,9 +24,11 @@
                     <a class="nav-link active" aria-current="page" href="{% url 'home' %}">Home</a>
                 </li>
                 {% if user.is_staff %}
-                <li class="nav-item">
-                    <a class="nav-link" aria-current="page" href="{% url 'list_profiles' %}">List Profiles</a>
-                </li>
+                <ul class="dropdown-menu" aria-labelledby="quizDropdown">
+                    <li><a class="dropdown-item" href="{% url 'list_profiles' %}">List Profiles</a></li>
+                    <li><a class="dropdown-item" href="{% url 'leaderboard' %}">Leaderboard</a></li>
+                    <li><a class="dropdown-item" href="{% url 'rating_history' %}">Rating History</a></li>
+                </ul>
                 {% endif %}
 
                 {% if user.is_authenticated and not user.is_staff %}
