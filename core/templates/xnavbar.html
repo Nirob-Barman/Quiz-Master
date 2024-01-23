@@ -23,6 +23,9 @@
                 <li class="nav-item">
                     <a class="nav-link active" aria-current="page" href="{% url 'home' %}">Home</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'rating_history' %}">Rating History</a>
+                </li>
                 {% if user.is_staff %}
                 <li class="nav-item">
                     <a class="nav-link" aria-current="page" href="{% url 'list_profiles' %}">List Profiles</a>
@@ -30,20 +33,15 @@
                 {% endif %}
 
                 {% if user.is_authenticated and not user.is_staff %}
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="quizDropdown" role="button"
-                        data-bs-toggle="dropdown" aria-expanded="false">
-                        Quiz
-                    </a>
-                    <ul class="dropdown-menu" aria-labelledby="quizDropdown">
-                        <li><a class="dropdown-item" href="{% url 'quiz_history' user.username %}">Quiz History</a></li>
-                        <li><a class="dropdown-item" href="{% url 'leaderboard' %}">Leaderboard</a></li>
-                        <li><a class="dropdown-item" href="{% url 'rating_history' %}">Rating History</a></li>
-                    </ul>
-                </li>
+                <div class="nav-item">
+                    <a class="nav-link" href="{% url 'quiz_history' user.username %}">Quiz History</a>
+                </div>
                 {% endif %}
 
                 {% if user.is_authenticated %}
+                <div class="nav-item">
+                    <a class="nav-link" href="{% url 'leaderboard' %}">Leaderboard</a>
+                </div>
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'privacy_settings' %}">Privacy Settings</a>
                 </li>
