@@ -7,6 +7,11 @@
 
     .nav-item.fade-in {
         opacity: 1;
+        border-bottom: 2px solid transparent;
+        transition: border-bottom 0.5s ease-in-out;
+    }
+    .nav-item.fade-in:hover {
+        border-bottom: 2px dotted black;
     }
 </style>
 
@@ -28,11 +33,17 @@
                 </li>
 
                 {% if user.is_staff %}
-                <ul class="dropdown-menu" aria-labelledby="quizDropdown">
-                    <li><a class="dropdown-item" href="{% url 'list_profiles' %}">List Profiles</a></li>
-                    <li><a class="dropdown-item" href="{% url 'leaderboard' %}">Leaderboard</a></li>
-                    <li><a class="dropdown-item" href="{% url 'rating_history' %}">Rating History</a></li>
-                </ul>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="quizDropdown" role="button" data-bs-toggle="dropdown"
+                        aria-expanded="false">
+                        Quiz
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="quizDropdown">
+                        <li><a class="dropdown-item" href="{% url 'list_profiles' %}">List Profiles</a></li>
+                        <li><a class="dropdown-item" href="{% url 'leaderboard' %}">Leaderboard</a></li>
+                        <li><a class="dropdown-item" href="{% url 'rating_history' %}">Rating History</a></li>
+                    </ul>
+                </li>
                 {% endif %}
 
                 {% if user.is_authenticated and not user.is_staff %}
