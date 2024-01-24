@@ -47,12 +47,13 @@
     <div class="certificate">
         <h1>Certificate of Quiz Completion</h1>
         <p>This is to certify that <strong>{{ user.username }}</strong> has successfully completed the quiz
-            <strong>{{ history.quiz.title }}</strong> with a score of <strong>{{ history.score }} out of {{history.totalMarks }}</strong>.
+            <strong>{{ history.quiz.title }}</strong> with a score of <strong>{{ history.score }} out of
+                {{history.totalMarks }}</strong>.
         </p>
         <p>Issued on: {{ history.completed_at|date:"F j, Y" }}</p>
-        <div class="signature">Quiz Master</div>
+        <div class="signature">MindMazeQuiz</div>
         <a href="{% url 'download_certificate' history.id %}" class="download-btn">Download Certificate</a>
     </div>
-</body>
+    </body>
 
 </html>
